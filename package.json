@@ -1,0 +1,23 @@
+{
+  "name": "dechart",
+  "version": "0.0.1",
+  "description": "",
+  "main": "lib/dechart/dechart.js",
+  "scripts": {
+    "build": "babel src -d lib",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Elden S. Park",
+  "license": "ISC",
+  "dependencies": {
+    "d3": "4.12.2"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.1.2",
+    "@babel/core": "^7.1.2",
+    "@babel/plugin-proposal-class-properties": "^7.1.0",
+    "@babel/plugin-proposal-decorators": "^7.1.2",
+    "@babel/plugin-syntax-dynamic-import": "^7.0.0",
+    "@babel/preset-env": "^7.1.0"
+  }
+}
