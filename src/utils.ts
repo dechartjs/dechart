@@ -16,7 +16,7 @@ export function makeBisector(key = 'date') {
   return d3.bisector((d) => d[key]).left;
 }
 
-export function pushToObject(obj, key, elem) {
+export function pushToObject(obj: any, key, elem) {
   if (!obj) throw new Error(`cannot add ${key}`);
 
   if (obj[key] === undefined || !Array.isArray(obj[key])) {
@@ -39,7 +39,8 @@ export function abbrNum(value, upperCase = false) {
   if (value >= 1000) {
     const suffixes = [ '', 'k', 'm', 'b', 't' ];
     const suffixNum = Math.floor(('' + value).length / 3);
-    let shortValue = '';
+    let shortValue = 0;
+    let shortValueString = '';
     for (let precision = 2; precision >= 1; precision--) {
       shortValue = parseFloat((suffixNum != 0
         ? (value / Math.pow(1000, suffixNum))
@@ -49,8 +50,12 @@ export function abbrNum(value, upperCase = false) {
         break;
       }
     }
-    if (shortValue % 1 != 0) shortValue = shortValue.toFixed(1);
-    newValue = shortValue
+
+    if (shortValue % 1 != 0) {
+      shortValueString = shortValue.toFixed(1);
+    }
+
+    newValue = shortValueString
       + (upperCase ? suffixes[suffixNum].toUpperCase() : suffixes[suffixNum]);
   }
   return newValue;

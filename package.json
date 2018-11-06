@@ -10,6 +10,7 @@
   "author": "Elden S. Park",
   "license": "MIT",
   "dependencies": {
+    "@types/d3": "^5.0.1",
     "d3": "4.12.2"
   },
   "devDependencies": {

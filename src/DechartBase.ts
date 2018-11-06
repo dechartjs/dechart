@@ -1,6 +1,7 @@
 import * as d3 from 'd3';
 
 import {
+  DECHART_CLASS_NAME,
   HTML_ROOT,
   SVG_ROOT,
 } from './dechart';
@@ -11,6 +12,15 @@ const state = {
 };
 
 export default class DechartBase {
+  chartType: string;
+  componentId: string;
+  data: any;
+  eventHandlers: EventHandlers;
+  options: ChartOptions;
+  $chartRoot: any;
+  $htmlRoot: any;
+  $svgRoot: any;
+
   constructor({
     chartType,
     componentId,
@@ -35,7 +45,7 @@ export default class DechartBase {
   }
 
   get cssNamespace() {
-    return `.${this.DECHART_CLASS_NAME}.${this.chartType}`;
+    return `.${DECHART_CLASS_NAME}.${this.chartType}`;
   }
 
   get pureWidth() {
@@ -51,7 +61,7 @@ export default class DechartBase {
       - this.options.legendHeight;
   }
 
-  static requireNonEmpty(obj, objName) {
+  static requireNonEmpty(obj, objName?: string) {
     const errorMessage = `Dechart needs ${objName}`;
     if (obj === undefined || obj === null) throw new Error(errorMessage);
     if (obj.length && obj.length === 0) throw new Error(errorMessage);
@@ -60,7 +70,9 @@ export default class DechartBase {
 
   static requireNode(selector, parent = d3) {
     const node = parent.select(selector);
-    if (!node || node.empty()) throw new Error('Dechart needs a html node: %s', selector);
+    if (!node || node.empty()) {
+      throw new Error(`Dechart needs a html node: ${selector}`);
+    }
     return node;
   }
 
@@ -87,16 +99,18 @@ export default class DechartBase {
 
   emit(eventName, payload) {
     DechartBase.requireNonEmpty(eventName);
-    const subscribers = this.eventHandlers[eventName] || {};
+    const subscribers = this.eventHandlers[eventName] || [];
     subscribers.map && subscribers.map((s) => s(payload));
-  }
+  } 
 
   globalStyle() {
     // Global style should be inserted only once
-    if (state.styles.global !== undefined) return '';
+    if (state.styles['global'] !== undefined) {
+      return '';
+    }
 
     state.styles['global'] = true;
-    const ns = '.' + this.DECHART_CLASS_NAME;
+    const ns = '.' + DECHART_CLASS_NAME;
     return `
       ${ns} .axis line, .axis path {
         stroke: #323232;
@@ -178,7 +192,7 @@ export default class DechartBase {
 
   injectStyle() {
     // Modify className of a target DOM node.
-    document.getElementById(this.componentId).className += ` ${this.DECHART_CLASS_NAME} ${this.chartType}`;
+    document.getElementById(this.componentId).className += ` ${DECHART_CLASS_NAME} ${this.chartType}`;
 
     // inject only once
     if (state.styles[this.chartType] !== undefined) return;
@@ -189,8 +203,8 @@ export default class DechartBase {
     const style = this.globalStyle() + this.style();
 
     if (style.length > 0) {
-      if (styleNode.styleSheet) {
-        styleNode.styleSheet.cssText = style;
+      if (styleNode['styleSheet']) {
+        styleNode['styleSheet'].cssText = style;
       } else {
         styleNode.appendChild(document.createTextNode(style));
       }
@@ -258,7 +272,7 @@ export default class DechartBase {
   }
 
   style() {
-    throw new Error('Dechart needs style()');
+    console.error('Dechart needs style()');
   }
 
   /**
@@ -266,6 +280,23 @@ export default class DechartBase {
    */
   update() {
   }
+
+  render() {
+    console.error('Dechart needs to define render()');
+    return false;
+  }
 }
 
-DechartBase.prototype.DECHART_CLASS_NAME = '__dechart__';
+interface EventHandlers {
+  [eventType: string]: Array<Function>;
+}
+
+interface ChartOptions {
+  height: number;
+  legendHeight: number;
+  marginBottom: number;
+  marginLeft: number;
+  marginRight: number;
+  marginTop: number;
+  width: number;
+}

@@ -1,0 +1,32 @@
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "baseUrl": ".",
+    "lib": ["es2017", "dom"],
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "noEmit": true,
+    "noImplicitAny": false,
+    "paths": {
+      "@jobs/*": [
+        "src/jobs/*"
+      ],
+      "@modules/*": [
+        "src/modules/*"
+      ],
+      "@persistence/*": [
+        "src/persistence/*"
+      ],
+      "@scrapers/*": [
+        "src/scrapers/*"
+      ]
+    },
+    "target": "es6"
+  },
+  "exclude": [
+    "node_modules"
+  ],
+  "include": [
+    "src/**/*"
+  ]
+}

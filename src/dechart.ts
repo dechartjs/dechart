@@ -4,7 +4,6 @@ import LineChart from './LineChart/LineChart';
 import PieChart from './PieChart/PieChart';
 import StackBarChart from './StackBarChart/StackBarChart';
 
-
 export const DechartType = {
   AREA: 'AREA',
   BAR: 'BAR',
@@ -14,15 +13,13 @@ export const DechartType = {
 };
 
 export const CHART_ROOT = 'chartRoot';
+export const DECHART_CLASS_NAME = '__dechart__';
 export const HTML_ROOT = 'htmlRoot';
 export const SVG_ROOT = 'svgRoot';
 export const SVG_ROOT_INNER = 'svgRootInner';
 export const TOOLTIP_ROOT = 'tooltipRoot';
-export const VERSION = '__version';
 
 export default class Dechart {
-  static [VERSION] = '0.0.1';
-
   constructor({
     chartType,
     componentId,
