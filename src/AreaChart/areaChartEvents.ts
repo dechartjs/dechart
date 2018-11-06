@@ -37,17 +37,16 @@ function makeSyntheticEvent(that, svgRootInnerNode) {
   const xVal = that.xScale.invert(mouseCoord[0]);
   const _xIdx = makeBisector('date')(that.data.values, xVal);
   const xIdx = _xIdx >= that.data.values.length ? that.data.values.length - 1 : _xIdx;
-  const data = that.data.values[xIdx];
-  const bulbX = [ that.xScale(data.date) ];
-  const bulbY = [ that.yScale(valueSum(data)) ];
+  const selectedData = that.data.values[xIdx];
+  const bulbX = [ that.xScale(selectedData.date) ];
+  const bulbY = [ that.yScale(valueSum(selectedData)) ];
 
   return new SyntheticEvent({
     bulbX,
     bulbY,
     clientX: mouseCoord[0],
     clientY: mouseCoord[1],
-    date: data.date,
-    data,
+    selectedData,
     xIdx,
   });
 }

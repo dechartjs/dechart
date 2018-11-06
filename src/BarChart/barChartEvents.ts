@@ -1,4 +1,5 @@
 import * as d3 from 'd3';
+
 import { makeBisector } from '../utils';
 import SyntheticEvent from '../SyntheticEvent';
 
@@ -33,8 +34,8 @@ function makeSyntheticEvent(that, svgRootInnerNode) {
   // console.log(6666, that.xScale.bandwidth());
 
   return new SyntheticEvent({
-    bulbX: clientX,
-    bulbY: clientY,
+    bulbX: [ clientX ],
+    bulbY: [ clientY ],
     clientX,
     clientY,
     // selectedData,

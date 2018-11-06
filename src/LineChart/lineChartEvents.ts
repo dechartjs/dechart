@@ -38,7 +38,7 @@ function makeSyntheticEvent(that, svgRootInnerNode) {
   const _xIdx = makeBisector('date')(that.data.values, xVal);
   const xIdx = _xIdx >= that.data.values.length ? that.data.values.length - 1 : _xIdx;
   const selectedData = createSelectedData(that.data.values[xIdx], keys);
-  const bulbX = [ that.xScale(selectedData.date) ];
+  const bulbX = [ that.xScale(selectedData['date']) ];
   const bulbY = getBulbY(that.yScale, selectedData);
 
   return new SyntheticEvent({
@@ -84,6 +84,6 @@ function createSelectedData(data, keys) {
   keys.forEach((key) => {
     obj[key] = data[key];
   });
-  obj.date = data.date;
+  obj['date'] = data.date;
   return obj;
 }

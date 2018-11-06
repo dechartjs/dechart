@@ -1,6 +1,6 @@
 import * as d3 from 'd3';
 
-import BarChartEvents from './BarChartEvents';
+import barChartEvents from './barChartEvents';
 import DechartBase from '../DechartBase';
 import { SVG_ROOT_INNER } from '../dechart';
 import {
