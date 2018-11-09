@@ -28,6 +28,7 @@ export default class DechartBase {
     defaultOptions,
     options,
   }) {
+    this.beta__dispatch = this.beta__dispatch.bind(this);
     this.chartType = DechartBase.requireNonEmpty(chartType);
     this.componentId = DechartBase.requireNonEmpty(componentId, 'componentId');
     this.data = DechartBase.requireNonEmpty(data, 'data');
@@ -191,7 +192,6 @@ export default class DechartBase {
   }
 
   injectStyle() {
-    // Modify className of a target DOM node.
     document.getElementById(this.componentId).className += ` ${DECHART_CLASS_NAME} ${this.chartType}`;
 
     // inject only once
@@ -275,10 +275,14 @@ export default class DechartBase {
     console.error('Dechart needs style()');
   }
 
-  /**
-   * todos: dynamic chart update functinality
-   */
-  update() {
+  beta__dispatch(action: object) {
+    /**
+     * Temporary implementation. 
+     */
+    console.log('[dechart] dispatch() with action: %o', action, this.componentId);
+    const element = document.getElementById(this.componentId);
+    console.log('on element', element);
+    element && (element.style.backgroundColor = '#f7f2e9');
   }
 
   render() {
@@ -292,6 +296,7 @@ interface EventHandlers {
 }
 
 interface ChartOptions {
+  backgroundColor: string;
   height: number;
   legendHeight: number;
   marginBottom: number;
