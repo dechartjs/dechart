@@ -112,6 +112,10 @@ export default class DechartBase {
     state.styles['global'] = true;
     const ns = '.' + DECHART_CLASS_NAME;
     return `
+      ${ns} {
+        background-color: ${this.options.backgroundColor || 'inherit'};
+      }
+    
       ${ns} .axis line, .axis path {
         stroke: #323232;
       }
@@ -191,7 +195,6 @@ export default class DechartBase {
   }
 
   injectStyle() {
-    // Modify className of a target DOM node.
     document.getElementById(this.componentId).className += ` ${DECHART_CLASS_NAME} ${this.chartType}`;
 
     // inject only once
@@ -275,10 +278,17 @@ export default class DechartBase {
     console.error('Dechart needs style()');
   }
 
-  /**
-   * todos: dynamic chart update functinality
-   */
-  update() {
+  beta__dispatch(action: object) {
+    /**
+     * Temporary implementation. 
+     */
+    console.log('[dechart] dispatch() with action: %o', action);
+
+    this.options = {
+      backgroundColor: 'blue',
+      ...this.options,
+    };
+    this.renderProxy();
   }
 
   render() {
@@ -292,6 +302,7 @@ interface EventHandlers {
 }
 
 interface ChartOptions {
+  backgroundColor: string;
   height: number;
   legendHeight: number;
   marginBottom: number;
